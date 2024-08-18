@@ -1,0 +1,14 @@
+{
+    "name": "yourname/book-info-plugin",
+    "description": "A WordPress plugin to manage book information.",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=7.4",
+        "veronalabs/rabbit": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RabbitExamplePlugin\\": "includes/"
+        }
+    }
+}
