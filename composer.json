@@ -4,7 +4,8 @@
     "type": "wordpress-plugin",
     "require": {
         "php": ">=7.4",
-        "veronalabs/rabbit": "^1.0"
+        "veronalabs/rabbit": "^1.0",
+        "veronalabs/plugin": "dev-master"
     },
     "autoload": {
         "psr-4": {
