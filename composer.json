@@ -3,10 +3,12 @@
     "description": "A WordPress plugin to manage book information.",
     "type": "wordpress-plugin",
     "require": {
-        "php": ">=7.4",
-        "veronalabs/rabbit": "^1.0",
-        "veronalabs/plugin": "dev-master"
-    },
+            "veronalabs/plugin": "dev-master",
+            "veronalabs/rabbit": "^1.4",
+            "laminas/laminas-i18n": "^2.28.0"
+    }
+    
+    ,
     "autoload": {
         "psr-4": {
             "RabbitExamplePlugin\\": "includes/"
