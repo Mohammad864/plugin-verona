@@ -4,7 +4,7 @@
     "type": "wordpress-plugin",
     "require": {
             "veronalabs/plugin": "dev-master",
-            "veronalabs/rabbit": "^1.4",
+            "veronalabs/rabbit": "^1.5",
             "laminas/laminas-i18n": "^2.28.0"
     }
     
