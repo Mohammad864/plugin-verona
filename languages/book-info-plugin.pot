@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Book Info Plugin 1.0.0\n"
+"Language: en_US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Book Information"
+msgstr ""
+
+msgid "ISBN:"
+msgstr ""
+
+msgid "An error occurred while saving data."
+msgstr ""
+
+msgid "Book Info"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Post ID"
+msgstr ""
+
+msgid "ISBN"
+msgstr ""
