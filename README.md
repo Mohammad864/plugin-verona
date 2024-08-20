@@ -1,4 +1,4 @@
-# plugin-verona
+# Plugin-VeronaLabs
 
 ## Acknowledgements
 
