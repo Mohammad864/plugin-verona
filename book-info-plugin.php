@@ -5,7 +5,7 @@
  * Plugin Prefix:   BIP
  * Description:     Plugin to manage book information.
  * Author:          Mohammad Taghipoor
- * Author URI:      https://linkedin.com/in/mohammad-taghipoor
+ * Author URI:      https://github.com/Mohammad864
  * Text Domain:     books-info-plugin
  * Domain Path:     /languages
  * Version:         1.0.0
