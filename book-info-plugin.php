@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name:     Books Info Plugin
- * Plugin URI:      https://example.com
+ * Plugin URI:      https://github.com/Mohammad864/plugin-verona/tree/main
  * Plugin Prefix:   BIP
  * Description:     Plugin to manage book information.
- * Author:          Your Name
- * Author URI:      https://example.com
+ * Author:          Mohammad Taghipoor
+ * Author URI:      https://linkedin.com/in/mohammad-taghipoor
  * Text Domain:     books-info-plugin
  * Domain Path:     /languages
  * Version:         1.0.0
@@ -44,6 +44,18 @@ class BooksInfoPlugin extends Singleton
     {
         $this->application = Application::get()->loadPlugin(__DIR__, __FILE__, 'config');
         $this->init();
+
+        // Enqueue scripts
+        add_action('admin_enqueue_scripts', [$this, 'enqueueScripts']);
+    }
+
+    public function enqueueScripts()
+    {
+        wp_enqueue_script('index', plugins_url('assets/src/js/admin/index.js', __FILE__), ['jquery'], null, true);
+        wp_localize_script('index', 'BooksInfoAjax', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce'    => wp_create_nonce('books_info_nonce'),
+        ]);
     }
 
     public function init()
@@ -68,6 +80,9 @@ class BooksInfoPlugin extends Singleton
 
             // Add admin menu to display books_info table
             add_action('admin_menu', [$this, 'addAdminMenu']);
+
+            // AJAX action to save ISBN in real-time
+            add_action('wp_ajax_save_isbn', [$this, 'ajaxSaveISBN']);
 
         } catch (Exception $e) {
             add_action('admin_notices', function () use ($e) {
@@ -171,6 +186,33 @@ class BooksInfoPlugin extends Singleton
             'post_id' => $post_id,
             'isbn' => $isbn
         ], ['%d', '%s']);
+    }
+
+    public function ajaxSaveISBN()
+    {
+        check_ajax_referer('books_info_nonce', 'nonce');
+
+        if (!current_user_can('edit_post', $_POST['post_id'])) {
+            wp_send_json_error('You do not have permission to edit this post.');
+        }
+
+        $post_id = intval($_POST['post_id']);
+        $isbn = sanitize_text_field($_POST['isbn']);
+
+        update_post_meta($post_id, '_isbn', $isbn);
+
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'books_info';
+
+        $existing_record = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE post_id = %d", $post_id));
+
+        if ($existing_record) {
+            $wpdb->update($table_name, ['isbn' => $isbn], ['post_id' => $post_id], ['%s'], ['%d']);
+        } else {
+            $wpdb->insert($table_name, ['post_id' => $post_id, 'isbn' => $isbn], ['%d', '%s']);
+        }
+
+        wp_send_json_success('ISBN saved successfully.');
     }
 
     public function addAdminMenu()
